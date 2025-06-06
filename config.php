@@ -11,9 +11,9 @@ define('ADMIN', getenv('DOCUMENT_ROOT') . "/views/{$rui}/");
 define('PROFILE_NAV', "{$rui}" );
 
 define('SERVER', "localhost");
-define('USERNAME', "elightma_calvins");
-define('PASSWORD',"calvrgm22?");
-define('DBNAME', "elightma_healthnavigator");
+define('USERNAME', "root");
+define('PASSWORD',"password");
+define('DBNAME', "myblog");
 define('CODE_VERSION', '1.0.0.0');
 define('SYSTEM', "public/assets/system");
 define('UPLOADS', "public/assets/uploads");
