@@ -5,15 +5,15 @@ class Dashboard_Model extends Model {
         parent::__construct(); 
     }
  
-    public function getsubs() {
-        return $this->_get("subscribers order by s_ID desc {$this->pagination()}" )[1];
+      public function getsubs() {
+        return [$this->_get("subscribers " )[0], $this->_get("subscribers order by s_ID desc {$this->pagination()}" )[1] ];
     }
     
     public function users($id = '') {
         if (!empty($id)) {
             return $this->_get('users', 'user_ID', [$id], 0 )[1];
         }
-        return $this->_get("users order by user_ID desc {$this->pagination()}" );
+        return [$this->_get("users " )[0], $this->_get("users order by user_ID desc {$this->pagination()}" )[1] ];
     }
     
     public function getlogs($max) {  
@@ -24,13 +24,13 @@ class Dashboard_Model extends Model {
         if (!empty($id)) {
             return $this->_get('contactus   ', 'id', [ $id  ], false )[1];
         }  
-        $data = $this->_get("contactus ", 'status', [ $status  ], 1, "order by id desc {$this->pagination()} ") ; 
+        $data = [$this->_get("contactus ", 'status', [ $status  ] )[0], $this->_get("contactus ", 'status', [ $status  ], 1, "order by id desc {$this->pagination()} ")[1] ] ; 
          
         return $data;
     } 
     
     public function totalblogs() {   
-        return $this->_get("blog left join blog_categories on blog_ID=bc_ID order by blog_ID desc {$this->pagination()}");
+        return [$this->_get("blog left join blog_categories on blog_ID=bc_ID ")[0], $this->_get("blog left join blog_categories on blog_ID=bc_ID order by blog_ID desc {$this->pagination()}")[1] ];
     }
     
 
@@ -58,7 +58,6 @@ class Dashboard_Model extends Model {
             
             ];
     }
-    
  
      
 
