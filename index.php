@@ -7,7 +7,7 @@ $approved_ips = [];
     if ( strpos($_SERVER['REQUEST_URI'], '.php') !== false )  {
         die("
             <!DOCTYPE html> <html> <head> <title>404 -  Not Found</title> <style>html, body { height: 100%; } </style> </head>
-                <body style='background:black'> <iframe src='views/err/index.php' style='height:100vh;height:100%!important;width:100%;'></iframe> </body> </html>");
+                <body style='background:black'> <iframe src='/not-found' style='height:100vh;height:100%!important;width:100%;'></iframe> </body> </html>");
     }
 
     $url = "http://";  
