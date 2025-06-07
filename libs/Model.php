@@ -13,7 +13,10 @@ class Model extends Database {
     }
    
     
-
+ 
+    /**
+	 * @return string - cl could give last return ids when needed
+	 */
     protected function _ms($error = false, string $ms = '', string $third = '' ) {
 		$newms = $error == false ? "Success" : "An errorr occurred";
 		
@@ -23,7 +26,7 @@ class Model extends Database {
 			"cl"=> $third
 		));
 		
-	} 
+	}  
 	/**
 	 * @return array 0=rowcount, 1=data
 	 */
@@ -60,7 +63,8 @@ class Model extends Database {
 		//echo $sql;die;
 		$stmt = $this->connection()->prepare($sql);
 		$eq = ($stmt->execute( $values ));
-		return $this->_ms($eq ? false : true);		
+		$lastId = $this->connection()->lastInsertId();
+		return $this->_ms($eq ? false : true, '', $lastId);		
 	}
     
     /**
