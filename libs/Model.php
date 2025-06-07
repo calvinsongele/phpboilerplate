@@ -58,12 +58,12 @@ class Model extends Database {
 	 * @return string json_encoded string
 	 */
 	protected function _insert(string $table, string $columns = '', array $values = [] ):string {
-	
+		$pdo = $this->connection();
 		$sql = "INSERT INTO $table ($columns) VALUES ({$this->_where($columns, ',', '?')}) ";		
 		//echo $sql;die;
-		$stmt = $this->connection()->prepare($sql);
+		$stmt = $pdo->prepare($sql);
 		$eq = ($stmt->execute( $values ));
-		$lastId = $this->connection()->lastInsertId();
+		$lastId = $pdo->lastInsertId();
 		return $this->_ms($eq ? false : true, '', $lastId);		
 	}
     
