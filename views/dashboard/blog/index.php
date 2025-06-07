@@ -6,7 +6,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
-    <main class="wrapper">
+    <main class="wrapper"> 
          
         <?php 
         $pageid = 'blog';
@@ -59,7 +59,7 @@
                                     <li class='page-item'><a href='/$pg/blog/?pg=$currentPage' class='page-link'> $currentPage </a></li>";
                                 }
                             
-                                if ( (ceil($this->data[0] / $this->_company['user_loop_sequence'])) > $_GET['pg'] )  {  
+                                if ( (ceil($this->data[0] / $this->_company['user_loop_sequence'])) > $_GET['pg'] ?? 1 )  {  
                             ?>
                             
                             <li class="page-item"><a href='/<?= $pg ?>/blog/?pg=<?= $this->currentpage + 1; ?>' class="page-link ">Next</a></li>
