@@ -9,8 +9,8 @@ class App {
 	private $_modelPath = 'model/'; 
 	private $_errorFile = 'err.php';
 	private $_defaultFile = 'index.php';
-	private $excluded_classes = array('blog' );
-	private $excluded_methods = array('categories',  'more');
+	private $excluded_classes = array('blog','read' );
+	private $excluded_methods = array('categories',  'search');
 
     /**
      * Starts the App
@@ -76,7 +76,7 @@ class App {
 	private function _getUrl()
 	{
 		$this->_url = isset($_GET['url_complex']) ? $_GET['url_complex'] : null;
-		$this->_url = str_replace('-', '', $this->_url ?? '');
+		//$this->_url = str_replace('-', '', $this->_url ?? '');
 		$this->_url = filter_var($this->_url, FILTER_SANITIZE_URL);
 		$this->_url = rtrim($this->_url, '/');
 		$this->_url = explode('/', $this->_url);
@@ -101,11 +101,12 @@ class App {
      */
 	private function _loadExistingController()
 	{
-		$file = $this->_controllerPath . $this->_url[0] . '.php';
+	    $clean_controller = str_replace('-', '', $this->_url[0] ?? '');
+		$file = $this->_controllerPath . $clean_controller . '.php';
 		if (file_exists($file)) {
 			require $file;
-			$this->_controller = new $this->_url[0];
-			$this->_controller->loadModel($this->_url[0]);
+			$this->_controller = new $clean_controller;
+			$this->_controller->loadModel($clean_controller);
 		} else {
 			$this->_error();
 			//echo 1;
@@ -125,6 +126,8 @@ class App {
      */
 	private function _callControllerMethod()
 	{
+	    
+	    $clean_method = str_replace('-', '', $this->_url[1] ?? '');
 		$length = count($this->_url);
 		//print_r($this->_url);
 		// Make sure the method we are calling exists
@@ -134,17 +137,17 @@ class App {
 		    if ( in_array($this->_url[0],$this->excluded_classes) ) {  
 		        if (empty($this->_url[1])) { $this->_error(); return; }
 		         
-		        if (in_array($this->_url[1], $this->excluded_methods)) { //methods to be exluded from going to index
-			        $this->_controller->{$this->_url[1]}( $this->_url[2]??null, $this->_url[3]??null, $this->_url[4]??null, $this->_url[5]??null );
+		        if (in_array($clean_method, $this->excluded_methods)) { //methods to be exluded from going to index
+			        $this->_controller->{$clean_method}( $this->_url[2]??null, $this->_url[3]??null, $this->_url[4]??null, $this->_url[5]??null );
 			        return;
 		        } 
 		        //all methods redirected to index method
-			    $this->_controller->{'index'}($this->_url[1]);
+			    $this->_controller->{'index'}($this->_url[1],$this->_url[2]??null, $this->_url[3]??null, $this->_url[4]??null, $this->_url[5]??null );
 			    return;
 		    }
 		    /*************88added******************/
 		    
-			if (!method_exists($this->_controller, $this->_url[1])) {
+			if (!method_exists($this->_controller, $clean_method)) {
 			    
 			    
 				$this->_error();
@@ -155,22 +158,22 @@ class App {
 		switch ($length) {
 			case 5:
 				//Controller->Method(Param1, Param2, Param3)
-				$this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3], $this->_url[4]);
+				$this->_controller->{$clean_method}($this->_url[2], $this->_url[3], $this->_url[4]);
 				break;
 			
 			case 4:
 				//Controller->Method(Param1, Param2)
-				$this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3]);
+				$this->_controller->{$clean_method}($this->_url[2], $this->_url[3]);
 				break;
 			
 			case 3:
 				//Controller->Method(Param1, Param2)
-				$this->_controller->{$this->_url[1]}($this->_url[2]);
+				$this->_controller->{$clean_method}($this->_url[2]);
 				break;
 			
 			case 2:
 				//Controller->Method(Param1, Param2)
-				$this->_controller->{$this->_url[1]}();
+				$this->_controller->{$clean_method}();
 				break;
 			
 			default:
