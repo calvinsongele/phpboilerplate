@@ -7,7 +7,10 @@ class Account extends Controller {
         
     }
 
-    public function index() {   
+    public function index() {  
+	if ($this->_company['c_user_can_login'] != 'True') {
+            CustomFunctions::relocate('/account/not-found');die; 
+        }
           if (Session::get('email') != null) CustomFunctions::relocate('/dashboard'); 
         
 		  $this->view->title =   'Login ' ;
@@ -26,6 +29,9 @@ class Account extends Controller {
     }
     
     public function signup() {   
+	if ($this->_company['c_user_can_signup'] != 'True') {
+            CustomFunctions::relocate('/account/not-found');die; 
+        }
           if (Session::get('email') != null) CustomFunctions::relocate('/dashboard'); 
             
 		  $this->view->title =   'Create a new account ' ;
