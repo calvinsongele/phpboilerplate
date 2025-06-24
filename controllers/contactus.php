@@ -8,7 +8,7 @@ class ContactUs extends Controller {
     }
 
     public function index() {     
-		  $this->view->title =  'Contact Us | '.$this->_company()['c_name'] ;
+		  $this->view->title =  'Contact Us';
 		  $this->view->render('index/contact');
     }
      
