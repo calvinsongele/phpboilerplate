@@ -9,7 +9,7 @@ class Settings extends Controller {
     }
 
     public function index() {    
-		  $this->view->title =  'Edit pages | '. $this->_company()['c_name'];
+		  $this->view->title =  'Edit pages' ;
 		  $this->view->render('index/settings');
     }
      
