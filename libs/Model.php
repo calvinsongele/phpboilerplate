@@ -234,6 +234,16 @@ class Model extends Database {
         
         return $ur;
     }
+	
+    protected function _unique_url($table, $col) {
+        $ur = '';
+        for($i = 2;  $i < 100; $i++) {
+            $ur = CustomFunctions::randchars($i);
+            if ( $this->_get($table, $col, [$ur])[0] == 0 ) break; 
+        }
+        
+        return $ur;
+    }
     protected function manage_tags($postid = 0 ) {
         $tags = explode(',',$_POST['tags']);  
         
