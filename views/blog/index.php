@@ -55,7 +55,7 @@
                                     <li class='page-item'><a href='/blog/?pg=$currentPage' class='page-link'> $currentPage </a></li>";
                                 }
                             
-                                if ( ceil($this->blog[0] / $this->_company['user_loop_sequence']) > 1 )  {
+                                if ( ceil($this->blog[0] / $this->_company['user_loop_sequence']) > ($_GET['pg'] ??1) )  { 
                             ?>
                             
                             <li class="page-item"><a href='/blog/?pg=<?= $this->currentpage + 1; ?>' class="page-link ">Next</a></li>
