@@ -300,7 +300,7 @@ class MyApp_Model extends Model
             if(empty($_FILES['file']['name'])) die($this->_ms(1, "File must be uploaded"));
             
             CustomFunctions::movefile('file', $img);
-            $slug = $this->slug_unique();
+            $slug = $this->generate_clean_slug( $_POST['title'], 'blog', 'blog_slug'  ); // $this->slug_unique();
             echo $this->_insert('blog', 'blog_title, blog_slug, blog_image, blog_category_fk, blog_content, blog_date, blog_user_fk', 
             [ $_POST['title'], $slug, $img, $_POST['category'], $_POST['body'], time(), Session::get('userid') ] );
             
