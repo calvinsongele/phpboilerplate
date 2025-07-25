@@ -244,6 +244,33 @@ class Model extends Database {
         
         return $ur;
     }
+	
+   private function checks_for_blog_url($slug, $table = 'blog', $col = 'blog_slug' ) {
+	return ( $this->_get($table, $col, [$slug] )[0] > 0) ? true : false ;
+   }
+    protected function generate_clean_slug($title, $table = 'blog', $col = 'blog_slug') {
+        // Step 1: Convert title to a basic slug
+        $slug = strtolower($title);
+        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug); // Remove special chars
+        $slug = preg_replace('/[\s-]+/', '-', $slug);       // Replace spaces and multiple hyphens with single hyphen
+        $slug = trim($slug, '-');                           // Trim trailing hyphens
+    
+        // Step 2: Limit to 40 characters max (cleanly)
+        $slug = substr($slug, 0, 45);
+        $slug = rtrim($slug, '-'); // Avoid trailing hyphen after cutting
+    
+        // Step 3: Ensure uniqueness
+        $original_slug = $slug;
+        $i = 1;
+        while ($this->checks_for_blog_url($slug, $table, $col )) {
+            // Append a number until unique; re-trim if needed
+            $suffix = '-' . $i;
+            $slug = substr($original_slug, 0, 45 - strlen($suffix)) . $suffix;
+            $i++;
+        }
+    
+        return $slug;
+    }
     protected function manage_tags($postid = 0 ) {
         $tags = explode(',',$_POST['tags']);  
         
