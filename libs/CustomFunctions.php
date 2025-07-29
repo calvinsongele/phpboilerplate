@@ -5,6 +5,56 @@ class CustomFunctions {
     
     }
 
+    public static function replaceLinksWithAnchors($text) {
+        return preg_replace_callback(
+            '#\bhttps?://[^\s<>()]+#i',
+            function($matches) {
+                $url = $matches[0];
+                $host = parse_url($url, PHP_URL_HOST);
+    
+                // Extract domain (e.g., youtube.com → Youtube)
+                $domainParts = explode('.', $host);
+                $mainDomain = $domainParts[count($domainParts) - 2] ?? 'Website';
+                $display = ucfirst($mainDomain); // Capitalize first letter
+    
+                return "<a href=\"$url\" target=\"_blank\" rel=\"noopener noreferrer\">View $display page</a>";
+            },
+            $text
+        );
+    }
+    public static function isSafeIdentifier(string $name): bool {
+        // 1. Must be valid UTF-8
+        if (!mb_check_encoding($name, 'UTF-8')) {
+            return false;
+        }
+    
+        // 2. Must not contain null bytes or control characters (ASCII < 32 or 127)
+        if (preg_match('/[\x00-\x1F\x7F]/', $name)) {
+            return false;
+        }
+    
+        // 3. Must match allowed characters: a-z, A-Z, 0-9, underscore (no leading numbers!)
+        if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $name)) {
+            return false;
+        }
+    
+        // 4. Optional: prevent overly long names (DB limits: 64 for MySQL identifiers)
+        if (strlen($name) > 64) {
+            return false;
+        }
+    
+        // 5. Optional: block SQL reserved words (very basic list; customize per DB)
+        $reserved = [
+            'select', 'from', 'where', 'insert', 'delete', 'update',
+            'drop', 'alter', 'table', 'join', 'union', 'into', 'create'
+        ];
+        if (in_array(strtolower($name), $reserved, true)) {
+            return false;
+        }
+    
+        return true;
+    }
+
    public static function editBtn($uniqueid) {
         if ((Session::get('role') != null) && (Session::get('role') == 'Admin') ) {
             return "<button class='editBtn ' rel='$uniqueid'><i class='fa fa-pencil' style='cursor:pointer;'></i> Edit</button>";
