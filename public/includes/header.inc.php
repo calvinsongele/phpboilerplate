@@ -12,5 +12,5 @@
 
 <link rel="stylesheet" href="/public/static/custom-main.css?v=<?= rand(); //$this->version; ?>"> 
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<title><?php echo $this->title ?> | <?= $this->_company['c_name'] ?></title>
+<title><?php echo $this->title ?> | <?= $this->page_id=='home' ? $this->_company['c_short_desc'] : $this->_company['c_name'] ?></title>
  
