@@ -219,6 +219,12 @@ class MyApp_Model extends Model
         if ($_POST['id'] == 'self_edit') $id = Session::get('userid');
         
         if (empty($_POST['val'])) exit($this->_ms(true, "<span class='text-danger'>Empty data cannot be saved</span>"));
+
+		
+        
+		if ( ! CustomFunctions::isSafeIdentifier($_POST['col']) ) {
+		   die($this->_ms(1, "Incorrect identifier. Try again."));
+		}
   
 		$b = $this->_update('users', $_POST['col'], 'user_ID', [$_POST['val'],  $id ]);
 		echo $this->_ms(false, "<span class='text-success'>".json_decode($b)->msg."</span>");
@@ -240,6 +246,11 @@ class MyApp_Model extends Model
 	    
 		if ($this->me()['user_role'] != 'Admin') die($this->_ms(1, "Not capacitated. "));
 		
+        
+		if ( ! CustomFunctions::isSafeIdentifier($_POST['col']) ) {
+		   die($this->_ms(1, "Incorrect identifier. Try again."));
+		}
+		
 		$this->_update('company', "{$_POST['col']}", 'c_ID', [strip_tags($_POST['val']),  1]);
 		echo $this->_ms(false, "<span class='text-success'>".json_decode($b)->msg."</span>");
 	}
@@ -251,6 +262,11 @@ class MyApp_Model extends Model
         
         CustomFunctions::movefile('file', $img);
         if ( file_exists(UPLOADS."/{$_POST['img']}")) unlink( UPLOADS."/{$_POST['img']}" ); 
+	    
+        
+		if ( ! CustomFunctions::isSafeIdentifier($_POST['col']) ) {
+		   die($this->_ms(1, "Incorrect identifier. Try again."));
+		}
 		
 		$this->_update('company', "{$_POST['col']}", 'c_ID', [$img,  1]);
 		echo $this->_ms(false, "<span class='text-success'>".json_decode($b)->msg."</span>");
