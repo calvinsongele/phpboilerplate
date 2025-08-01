@@ -5,6 +5,10 @@ class CustomFunctions {
     
     }
 
+    public static function containsAnyWord(string $sentence, array $words): bool {
+        $pattern = '/\b(' . implode('|', array_map('preg_quote', $words)) . ')\b/i';
+        return (bool) preg_match($pattern, $sentence);
+    }
     public static function replaceLinksWithAnchors($text) {
         return preg_replace_callback(
             '#\bhttps?://[^\s<>()]+#i',
