@@ -29,8 +29,17 @@ class Dashboard_Model extends Model {
         return $data;
     } 
     
-    public function totalblogs() {   
-        return [$this->_get("blog left join blog_categories on blog_ID=bc_ID ")[0], $this->_get("blog left join blog_categories on blog_ID=bc_ID order by blog_ID desc {$this->pagination()}")[1] ];
+    public function totalblogs() {
+	$output = [];
+        $blog = $this->_get("blog left join blog_categories on blog_ID=bc_ID order by blog_ID desc {$this->pagination()}")[1];
+        foreach($blog as $row) {
+            $row['blog_views'] = $this->_get('analytics', '( page_url REGEXP ? )', [ "/blog/" . preg_quote($row['blog_slug'], '/') . "(/|$|\\?)" ])[0];
+            $output[] = $row; 
+        }
+        
+        return [$this->_get("blog left join blog_categories on blog_ID=bc_ID ")[0], $output ];
+	    
+        //return [$this->_get("blog left join blog_categories on blog_ID=bc_ID ")[0], $this->_get("blog left join blog_categories on blog_ID=bc_ID order by blog_ID desc {$this->pagination()}")[1] ];
     }
     
 
@@ -67,3 +76,4 @@ class Dashboard_Model extends Model {
 
     ///////////////////
 }
+
