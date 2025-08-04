@@ -27,6 +27,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Title</th> 
+                                        <th>Views</th> 
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
@@ -34,7 +35,10 @@
                                     <?php $i = 0; foreach($this->data[1] as $row) { $i++; ?>
                                     <tr>
                                         <td><?php echo $i ?></td>
-                                        <td><?php echo ($row['blog_title']) ?> <a class='badge   btn-primary' href='/blog/<?php echo $row['blog_slug'] ?>' target='_blank' ><i class='fa fa-eye'></i></a> </td>
+                                        <td> 
+                                            <a class='badge   btn-primary' href='/blog/<?php echo $row['blog_slug'] ?>' target='_blank' 
+                                                ><?= substr($row['blog_title'], 0, 55) ?>...</a> </td>
+                                        <td><?= $row['blog_views'] ?>  </td>
                                         <td> <a class='badge   btn-success' href='/<?= PROFILE_NAV ?>/blog/edit/<?php echo $row['blog_ID'] ?>'><i class='fa fa-pencil'></i> Edit</a> </td>
                                       
                                         <td><a href='#' rel='<?php echo $row['blog_ID'] ?>' img='<?php echo $row['blog_image'] ?>' class='badge badge-danger del_blog'><i class='fa fa-trash'></i> Delete</a> </td>
@@ -105,3 +109,4 @@
 </body>
 
 </html>
+
