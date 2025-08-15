@@ -206,7 +206,7 @@ class MyApp_Model extends Model
         //header('Content-Type:text/html;charset=utf-8');
         echo json_encode( array('error'=>'false', 'msg'=>'Sent successfully' ) );
          
-        CustomFunctions::SendMail($emails, $_POST['subject'], "<div style='padding: 5px;'> {$_POST['msg']} </div>" );
+        CustomFunctions::SendMail($emails, $_POST['subject'], "<div style='padding: 5px;'> {$_POST['msg']} </div>", $this->_company() );
     }
     public function new_sms_send() {
         //CustomFunctions::SendSMS($_POST['desc'], $_POST['tel']);
