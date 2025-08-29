@@ -183,7 +183,7 @@ class CustomFunctions {
 	}
  
     
-    public static function SendMail($email, $subject, $body, $company) {
+    public static function SendMail($email, $subject, $body, $company, $filename = '') {
             
             
         $from = $company['c_send_from'];
@@ -462,3 +462,4 @@ class CustomFunctions {
     //end of class
     
 }
+
