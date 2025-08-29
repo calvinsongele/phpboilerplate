@@ -65,6 +65,13 @@
                                     <input class='form-control ucdata' rel='c_send_from_password'  value='<?php echo $me['c_send_from_password'] ?>'>
                                     <span class='c_send_from_password'></span>
                                 </div>
+	
+                                <div class='col-md-6 mb-3'>
+                                    <label class='dispboth'><span>Send email host name</span> </label>
+                                   
+                                    <input class='form-control ucdata' rel='c_smtp_server'  value='<?php echo $me['c_smtp_server'] ?>'>
+                                    <span class='c_smtp_server'></span>
+                                </div>
                                 <!--------------------------------->
                                 <div class='col-md-6 mb-3'> 
                                     <label class='dispboth'><span>Company Tel</span>  </label>
@@ -264,4 +271,5 @@
  
 </body>
  
+
 </html>
