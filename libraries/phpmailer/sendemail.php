@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
  
 $object = new Mailer_Self();
-$object->actualSend($email, $from, $subject, $messages, $company);
+$object->actualSend($email, $from, $subject, $messages, $company, $filename );
  
 class Mailer_Self  {
     
@@ -17,7 +17,7 @@ class Mailer_Self  {
     
     
     
-    public function actualSend($email, $from, $subject, $message, $company) {
+    public function actualSend($email, $from, $subject, $message, $company, $filename = '') {
         $mail = new PHPMailer(true);   
   
         try { 
@@ -50,6 +50,14 @@ class Mailer_Self  {
                 $mail->Body    = $message[$i] ?? "<div> Just a test message if working fine </div>";
                 $altbody = $message[$i] ?? 'Alt body';
                 $mail->AltBody = strip_tags($altbody) ;
+
+				if (!empty($filename)) {
+					$mail->AddAttachment("{$_SERVER['DOCUMENT_ROOT']}/public/assets/uploads/{$filename}", $filename);
+					//$pdfData = base64_encode(file_get_contents('/path/to/file.pdf'));
+					//$pdfDecoded = base64_decode($pdfData); 
+					//$mail->addStringAttachment($pdfDecoded, 'manual.pdf', 'base64', 'application/pdf');
+				}
+				
                 if ( !empty($_FILES['file']['name'][0]) ) {
                     
                 	for ( $i = 0; $i < count($_FILES['file']['name']); $i++ ) { 
@@ -140,3 +148,4 @@ class Mailer_Self  {
 	
 	
 }
+
