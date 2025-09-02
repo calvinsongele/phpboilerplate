@@ -60,9 +60,9 @@ class Mailer_Self  {
 				
                 if ( !empty($_FILES['file']['name'][0]) ) {
                     
-                	for ( $i = 0; $i < count($_FILES['file']['name']); $i++ ) { 
-                        $file_tmp  = $_FILES['file']['tmp_name'][$i];
-                        $file_name = $_FILES['file']['name'][$i];
+                	for ( $j = 0; $j < count($_FILES['file']['name']); $j++ ) { 
+                        $file_tmp  = $_FILES['file']['tmp_name'][$j];
+                        $file_name = $_FILES['file']['name'][$j];
                 
                         $mail->AddAttachment($file_tmp, $file_name);
                 	}
@@ -72,6 +72,8 @@ class Mailer_Self  {
                 $status = $mail->send() ? 'success' : 'fail'; 
                 $this->_insert("email_logs", "recipient, status, message", [$email_row, $status, $mail->ErrorInfo] );
                 $i++;
+				$mail->clearAllRecipients();
+				//$mail->clearAttachments();
             }
             $mail->SmtpClose();
             
@@ -148,4 +150,5 @@ class Mailer_Self  {
 	
 	
 }
+
 
