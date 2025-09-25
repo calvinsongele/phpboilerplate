@@ -39,9 +39,13 @@ $approved_ips = [];
                 <title>{$_SERVER['HTTP_HOST']}</title>
             </head>
             <body style='background:black'>
-                <section style='margin-top:16%;'>
-                    <h1 style='color:white;'>{$_SERVER['HTTP_HOST']} is under Maintenance</h>
-                </section>
+                 <center>
+                    <section style='margin-top:16%;'>
+                        <h1 style='color:white;'>{$_SERVER['HTTP_HOST']} is under Maintenance</h>
+                        
+                        <p>Your IP {$_SERVER['REMOTE_ADDR']} is blocked. </p>
+                    </section>
+                </center>
             </body>
         </html>");
     
@@ -61,3 +65,4 @@ function autoload($class_name) {
 
 $app = new App();
 $app->init();
+
