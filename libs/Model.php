@@ -218,7 +218,7 @@ class Model extends Database {
         $content = $this->_get('contents ', '',[], true )[1];
         $output = [];
         foreach ($content as $row) {
-            $body = str_replace('[bank_name]', $this->_company()['c_name'], $row['cont_body']);
+            $body = str_replace('[c_name]', $this->_company()['c_name'], $row['cont_body']);
            $output[$row['cont_given_id']] = ['body'=> $body, 'edit'=>$row['cont_body'], 
            'title'=>$row['cont_title'], 'image_name'=>$row['cont_img']  
            ];
