@@ -1,5 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <link rel="icon" type="image/*" href="/public/assets/uploads/<?php echo $this->_company['c_icon'] ?>" />
 <style>
     *{  --primary: <?= $this->_company['c_primary_color'] ?>;  }
@@ -14,3 +15,4 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <title><?php echo $this->title ?> | <?= $this->page_id=='home' ? $this->_company['c_short_desc'] : $this->_company['c_name'] ?></title>
  
+
