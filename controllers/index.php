@@ -9,6 +9,7 @@ class Index extends Controller {
     }
 
     public function index() {    
+		  $this->view->pid = 'home'; 
           $this->view->latest = $this->model->getblog();    
 		  $this->view->title = $this->_company()['c_name'] ;
 		  $this->view->render('index/index' );
@@ -34,3 +35,4 @@ class Index extends Controller {
     //////////////////////////////////////////////////
 
 }
+
