@@ -8,6 +8,7 @@ class ContactUs extends Controller {
     }
 
     public function index() {     
+		  $this->view->pid = 'contact'; 
 		  $this->view->title =  'Contact Us';
 		  $this->view->render('index/contact');
     }
