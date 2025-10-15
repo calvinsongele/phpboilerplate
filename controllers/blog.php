@@ -10,6 +10,7 @@ class Blog extends Controller {
 
     public function index($url = null) {   
         $this->view->currentpage = $_GET['pg'] ?? 1;
+		$this->view->pid = 'blog'; 
         
         if ( !empty($url) ) { 
           $this->view->blog = $this->model->getblog( $url );
@@ -32,6 +33,7 @@ class Blog extends Controller {
     
     public function categories($url = null) {
         $this->view->currentpage = $_GET['pg'] ?? 1;
+		$this->view->pid = 'blog';
         
         if (empty($url)) { 
               $this->view->blog = $this->model->getblogcategories(   );
